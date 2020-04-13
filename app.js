@@ -35,6 +35,9 @@ async function createRoom() {
   console.log('Create PeerConnection with configuration: ', configuration);
   peerConnection = new RTCPeerConnection(configuration);
 
+  peerConnection.addEventListener('datachannel', receiveChannelCallback);
+
+
   registerPeerConnectionListeners();
 
   localStream.getTracks().forEach(track => {
@@ -47,7 +50,7 @@ async function createRoom() {
   const messageBox = document.querySelector('#messageBox');
   const sendButton = document.querySelector('#sendButton');
   // const peerConnection = new RTCPeerConnection(configuration);
-  const dataChannel = peerConnection.createDataChannel('messaging-channel');
+  const dataChannel = peerConnection.createDataChannel('sendDataChannel');
   const incomingMessages = document.querySelector('#incomingMessages');
 
   // Enable textarea and button when opened
@@ -64,16 +67,14 @@ async function createRoom() {
   });
 
   sendButton.addEventListener('click', event => {
-    const message = messageBox.textContent;
-    console.log('message box contant ----->', message)
-    dataChannel.send(message);
-  })
+    console.log('clicked on send button')
 
-  // Append new messages to the box of incoming messages
-  dataChannel.addEventListener('message', event => {
-    const message = event.data;
-    incomingMessages.textContent += message + '\n';
-  });
+    const message = messageBox.value;
+    var d = new Date();
+    incomingMessages.innerText += d.toUTCString() + '\n' + 'caller: ' + message + '\n' + '\n';
+    console.log('message box contant ----->', message)
+    dataChannel.send(d.toUTCString() + '\n' + 'caller: ' + message + '\n' + '\n');
+  })
 
   peerConnection.addEventListener('icecandidate', event => {
     if (!event.candidate) {
@@ -164,8 +165,11 @@ async function joinRoomById(roomId) {
       peerConnection.addTrack(track, localStream);
     });
 
+    peerConnection.addEventListener('datachannel', receiveChannelCallback);
+
+
     const incomingMessages = document.querySelector('#incomingMessages');
-    const dataChannel = peerConnection.createDataChannel('messaging-channel');
+    const dataChannel = peerConnection.createDataChannel('receiveDataChannel');
 
     const messageBox = document.querySelector('#messageBox');
     const sendButton = document.querySelector('#sendButton');
@@ -179,24 +183,19 @@ async function joinRoomById(roomId) {
       sendButton.disabled = false;
     })
 
-    // Disabled input when closed
+    // // Disabled input when closed
     dataChannel.addEventListener('close', event => {
       messageBox.disabled = false;
       sendButton.disabled = false;
     });
 
     sendButton.addEventListener('click', event => {
-      const message = messageBox.textContent;
+      const message = messageBox.value;
+      var d = new Date();
+      incomingMessages.innerText += d.toUTCString() + '\n' + 'callee: ' + message + '\n' + '\n';
       console.log('message box contant ----->', message)
-      dataChannel.send(message);
+      dataChannel.send(d.toUTCString() + '\n' + 'callie: ' + message + '\n' + '\n');
     })
-
-
-    // Append new messages to the box of incoming messages
-    dataChannel.addEventListener('message', event => {
-      const message = event.data;
-      incomingMessages.textContent += message + '\n';
-    });
 
     // Code for collecting ICE candidates below
     const calleeCandidatesCollection = roomRef.collection('calleeCandidates');
@@ -322,6 +321,32 @@ function registerPeerConnectionListeners() {
     console.log(
       `ICE connection state change: ${peerConnection.iceConnectionState}`);
   });
+}
+
+function receiveChannelCallback(event) {
+  console.log('Receive Channel Callback');
+  receiveChannel = event.channel;
+  // receiveChannel.binaryType = 'arraybuffer';
+  // receiveChannel.addEventListener('close', onReceiveChannelClosed);
+  receiveChannel.addEventListener('message', onReceiveMessageCallback);
+}
+
+function onReceiveMessageCallback(event) {
+  const incomingMessages = document.querySelector('#incomingMessages');
+
+  // receiveProgress.value += event.data.length;
+  // console.log(`Received ${receiveProgress.value}/${receiveProgress.max}`);
+  console.log('incoming message is ----->', event.data)
+  const message = event.data;
+  incomingMessages.innerText += message + '\n';
+
+  // Workaround for a bug in Chrome which prevents the closing event from being raised by the
+  // remote side. Also a workaround for Firefox which does not send all pending data when closing
+  // the channel.
+  // if (receiveProgress.value === receiveProgress.max) {
+  //   sendChannel.close();
+  //   receiveChannel.close();
+  // }
 }
 
 init();
