@@ -61,7 +61,7 @@
         }
 
         .bg-1 {
-            background: #166a77;
+            background: #2d2d30;
             color: #bdbdbd;
         }
 
@@ -215,60 +215,10 @@
 </head>
 
 <body>
-    <!-- <div id="buttons">
-        <button class="mdc-button mdc-button--raised" id="cameraBtn">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
-            <span class="mdc-button__label">Open camera & microphone</span>
-        </button>
-        <button class="mdc-button mdc-button--raised" disabled id="createBtn">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
-            <span class="mdc-button__label">Create room</span>
-        </button>
-        <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">group</i>
-            <span class="mdc-button__label">Join room</span>
-        </button>
-        <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
-            <span class="mdc-button__label">Hangup</span>
-        </button>
-    </div>
-    <div>
-        <span id="currentRoom"></span>
-    </div>
-    <div id="videos">
-        <video id="localVideo" muted autoplay playsinline></video>
-        <video id="remoteVideo" autoplay playsinline></video>
-    </div>
-    <div class="mdc-dialog" id="room-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
-        aria-describedby="my-dialog-content">
-        <div class="mdc-dialog__container">
-            <div class="mdc-dialog__surface">
-                <h2 class="mdc-dialog__title" id="my-dialog-title">Join room</h2>
-                <div class="mdc-dialog__content" id="my-dialog-content">
-                    Enter ID for room to join:
-                    <div class="mdc-text-field">
-                        <input type="text" id="room-id" class="mdc-text-field__input">
-                        <label class="mdc-floating-label" for="my-text-field">Room ID</label>
-                        <div class="mdc-line-ripple"></div>
-                    </div>
-                </div>
-                <footer class="mdc-dialog__actions">
-                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-                        <span class="mdc-button__label">Cancel</span>
-                    </button>
-                    <button id="confirmJoinBtn" type="button" class="mdc-button mdc-dialog__button"
-                        data-mdc-dialog-action="yes">
-                        <span class="mdc-button__label">Join</span>
-                    </button>
-                </footer>
-            </div>
-        </div>
-        <div class="mdc-dialog__scrim"></div>
-    </div> -->
-<!-- </body> -->
 
-<!-- <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50"> -->
+    <!-- </body> -->
+
+    <!-- <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50"> -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -281,34 +231,70 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#myPage">HOME</a></li>
+                    <li><a href="index.html">HOME</a></li>
                     <li><a href="createMeeting.html">HOST A MEETING </a></li>
                     <li><a href="joinMeeting.html">JOIN A MEETING</a></li>
-                    
+            
                 </ul>
             </div>
         </div>
     </nav>
-    <div id="band" class="container text-center">
-        <h1>UNITED</h1>
-        <p>Due to various security questions raised on popular video conferencing app Zoom, our country needs an app which is completely secure and does not leak or store confidential information. In this COVID-19 lockdown, the demand for robust online meeting business solutions has never been high like today. So, we have decided a solution to come out of this problem by making a brand new video Peer to Peer Multi Audio-Video Conferencing App + Web which does not store any confidential conference information on any server.</p>
-    </div>
-    </div>
-    <div id="contact" class="container">
-        <h3 class="text-center">Contact Details</h3>
-        <div class="row">
-            <div class="col-md-6">
-                <p><span class="glyphicon glyphicon-map-person"></span>Ankit Patel</p>
-                <p><span class="glyphicon glyphicon-phone"></span>Phone: +91 9825518618 </p>
-                <p><span class="glyphicon glyphicon-envelope"></span>Email: ankitpatel171997@gmail.com</p>
-            </div>
-            <div class="col-md-6">
-                <p><span class="glyphicon glyphicon-map-person"></span>Urvi Shah</p>
-                <p><span class="glyphicon glyphicon-phone"></span>Phone: +91 9409403672</p>
-                <p><span class="glyphicon glyphicon-envelope"></span>Email: shahurvi009@gmail.com</p>
+    <div id="band" class=" text-center">
+        <h3 style="margin-top: 80px;">HOST A MEETING</h3>
+
+        <div id="buttons" class="container-fluid">
+            <button class="mdc-button mdc-button--raised" id="cameraBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
+                <span class="mdc-button__label">Start Video </span>
+            </button>
+            <button class="mdc-button mdc-button--raised" id="microphoneBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
+                <span class="mdc-button__label">Start Audio</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" disabled id="createBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
+                <span class="mdc-button__label">Create room</span>
+            </button>
+           
+            <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
+                <span class="mdc-button__label">Hangup</span>
+            </button>
+            <button disabled id="joinBtn" style="visibility:hidden">
+                <!-- <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
+                    <span class="mdc-button__label"></span> -->
+            </button>
+        </div>
+
+        <div>
+            <span id="currentRoom"></span>
+        </div>
+        <div class="col-sm-9">
+            <div id="videos">
+                <video id="localVideo" muted autoplay playsinline></video>
+                <video id="remoteVideo" autoplay playsinline></video>
             </div>
         </div>
- 
+        <div class="col-sm-3">
+            <div class="scrollview" style="height:300px;scroll-behavior: auto;border-style: solid;margin-top: 50px;">
+                <span id="incomingMessages" ></span>
+            </div>
+            <div id="buttons">
+                <div class="mdc-text-field" style="width: 77%;">
+                    <input type="text" id="messageBox" class="mdc-text-field__input">
+                    <label class="mdc-floating-label" for="my-text-field">Type</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+                <button class="mdc-button mdc-button--raised" disabled id="sendButton">
+                    <!-- <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i> -->
+                    <span class="mdc-button__label">Send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
 </body>
 <script src="app.js"></script>
 

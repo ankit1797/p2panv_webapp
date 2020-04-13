@@ -19,6 +19,7 @@ let roomDialog = null;
 let roomId = null;
 
 function init() {
+  mdc.autoInit();
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
   document.querySelector('#hangupBtn').addEventListener('click', hangUp);
   document.querySelector('#createBtn').addEventListener('click', createRoom);
